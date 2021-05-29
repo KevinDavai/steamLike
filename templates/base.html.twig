@@ -5,15 +5,94 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
         {% endblock %}
-
-        {% block javascripts %}
-            {#{{ encore_entry_script_tags('app') }}#}
-        {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">StimLike</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('home') }}">Home
+                        </a>
+                        </li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
+
+        {% block javascripts %}
+            <script type="text/javascript">
+                /**
+                 * Get the submit buttons from the given form
+                 */
+                function getSubmitButtons(form) {
+                    var buttons = form.querySelectorAll('button, input');
+                    var submitButtons = [];
+                    for (var i= 0; i < buttons.length; i++) {
+                        var button = buttons[i];
+                        if (button.getAttribute('type') == 'submit') {
+                            submitButtons.push(button);
+                        }
+                    }
+                    return submitButtons;
+                }
+                /**
+                 * Prevent the submit buttons from submitting a form
+                 * and invoke the challenge for the given widget id
+                 */
+                function bindChallengeToSubmitButtons(form, reCaptchaId) {
+                    getSubmitButtons(form).forEach(function (button) {
+                        button.addEventListener('click', function (e) {
+                            e.preventDefault();
+                            grecaptcha.execute(reCaptchaId);
+                        });
+                    });
+                }
+                /**
+                 * Render a reCAPTCHA from the type
+                 */
+                function renderReCaptcha(widget) {
+                    var form = widget.closest('form');
+                    var widgetType = widget.getAttribute('data-type');
+                    var widgetParameters = {
+                        'sitekey': '{{ gg_recaptcha_site_key }}'
+                    };
+                    if (widgetType == 'invisible') {
+                        widgetParameters['callback'] = function () {
+                            form.submit()
+                        };
+                        widgetParameters['size'] = "invisible";
+                    }
+                    var widgetId = grecaptcha.render(widget, widgetParameters);
+                    if (widgetType == 'invisible') {
+                        bindChallengeToSubmitButtons(form, widgetId)
+                    }
+                }
+                /**
+                 * The callback function executed
+                 * once all the Google dependencies have loaded
+                 */
+                function onGoogleReCaptchaLoad() {
+                    var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
+                    for (var i = 0; i < widgets.length; i++) {
+                        renderReCaptcha(widgets[i]);
+                    }
+                }
+            </script>
+            <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaLoad&render=explicit"></script>
+        {% endblock %}
     </body>
 </html>

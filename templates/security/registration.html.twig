@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Inscris toi le sang !</h1>
+    
+    {{ form_start(form) }}
+    
+    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'attr': {'placeholder': 'Nom d\'utilisateur ...'}}) }}
+    {{ form_row(form.email, { 'label': 'Adresse email', 'attr': {'placeholder': 'Adresse email ...'}}) }}
+    {{ form_row(form.password) }}
+
+    {{ form_errors(form.captcha) }}
+    {{ form_row(form.captcha) }}
+
+
+    <button type="submit" class="btn btn-success">Inscription</button>
+
+
+    {{ form_end(form) }}
+
+{% endblock %}
