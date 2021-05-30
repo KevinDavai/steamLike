@@ -48,6 +48,11 @@ class User implements UserInterface
     private $password;
 
     protected $captcha;
+
+     /**
+     * @ORM\Column(type="boolean")
+     */
+    private $isVerified = false;
     
     public function getCaptcha()
     {
@@ -108,5 +113,17 @@ class User implements UserInterface
 
     public function getRoles() {
         return ['ROLE_USER'];
+    }
+
+    public function isVerified(): bool
+    {
+        return $this->isVerified;
+    }
+
+    public function setIsVerified(bool $isVerified): self
+    {
+        $this->isVerified = $isVerified;
+
+        return $this;
     }
 }
