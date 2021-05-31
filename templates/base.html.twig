@@ -8,33 +8,14 @@
         <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
+        <link href="/css/account.css" rel="stylesheet">
         {% endblock %}
     </head>
-    <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="#">StimLike</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-                </button>
 
-                <div class="collapse navbar-collapse" id="navbarColor01">
-                    <ul class="navbar-nav me-auto">
-                        <li class="nav-item">
-                        <a class="nav-link active" href="{{ path('home') }}">Home
-                        </a>
-                        </li>
-                    
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            {% block body %}{% endblock %}
-        </div>
+    {% block javascripts %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-        {% block javascripts %}
-            <script type="text/javascript">
+    <script type="text/javascript">
                 /**
                  * Get the submit buttons from the given form
                  */
@@ -93,6 +74,29 @@
                 }
             </script>
             <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaLoad&render=explicit"></script>
-        {% endblock %}
+    {% endblock %}
+
+    <body>
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">StimLike</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarColor01">
+                    <ul class="navbar-nav me-auto">
+                        <li class="nav-item">
+                        <a class="nav-link active" href="{{ path('home') }}">Home
+                        </a>
+                        </li>
+                    
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            {% block body %}{% endblock %}
+        </div>
     </body>
 </html>

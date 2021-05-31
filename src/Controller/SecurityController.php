@@ -62,6 +62,8 @@ class SecurityController extends AbstractController
             );
 
 
+            // ouvre la popup
+            
             return $guard->authenticateUserAndHandleSuccess($user,$request,$login,'main');
         }
 
@@ -81,7 +83,7 @@ class SecurityController extends AbstractController
         } catch (VerifyEmailExceptionInterface $exception) {
             $this->addFlash('verify_email_error', $exception->getReason());
 
-            return $this->redirectToRoute('app_register');
+            return $this->redirectToRoute('security_registration');
         }
 
         // @TODO Change the redirect on success and handle or remove the flash message in your templates

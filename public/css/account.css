@@ -1,0 +1,11 @@
+.content--new {
+    display: none;
+  }
+  
+  #section:target .content--old {
+    display: none;
+  }
+  
+  #section:target .content--new {
+    display: block;
+  }
