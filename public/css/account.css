@@ -1,11 +1,112 @@
-.content--new {
-    display: none;
+/*
+*
+* ==========================================
+* CUSTOM UTIL CLASSES
+* ==========================================
+*
+*/
+
+.vertical-nav {
+  min-width: 17rem;
+  width: 17rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.1);
+  transition: all 0.4s;
+}
+
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+
+/* for toggle behavior */
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
   }
-  
-  #section:target .content--old {
-    display: none;
+  #sidebar.active {
+    margin-left: 0;
   }
-  
-  #section:target .content--new {
-    display: block;
+  #content {
+    width: 100%;
+    margin: 0;
   }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+}
+
+/*
+*
+* ==========================================
+* FOR DEMO PURPOSE
+* ==========================================
+*
+*/
+
+body {
+  background: #599fd9;
+  background: -webkit-linear-gradient(to right, #599fd9, #c2e59c);
+  background: linear-gradient(to right, #599fd9, #c2e59c);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+
+.text-gray {
+  color: #aaa;
+}
+
+.loader {
+  position : fixed;
+  z-index: 9999;
+  background : url('/img/loader.gif') 50% 50% no-repeat;
+  height : 100%;
+  width : 100%;
+  cursor : wait;
+  }
+
+.post_msg {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  margin-left: 7em;
+  align-items: center;
+}
+
+.block-mid {
+  background: white;
+  width: 55rem;
+  height: 85vh;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 10%);
+  transition: all 0.4s;
+}
+
+.opacity-50 {
+  opacity: 50%;
+}
+
+

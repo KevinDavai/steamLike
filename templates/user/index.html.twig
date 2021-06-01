@@ -1,11 +1,112 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Welcome!{% endblock %}</title>
 
+        <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <link href="/css/account.css" rel="stylesheet">
+    </head>
 
-{% extends 'base.html.twig' %}
+    <body>
+        <div class="vertical-nav bg-white" id="sidebar">
+            <div class="py-4 px-3 mb-4 bg-light">
+                <div class="media d-flex align-items-center">
+                    <div class="media-body">
+                        <h4 class="m-0">sdfgsdgdsfgsdgdsg</h4>
+                            <p class="font-weight-light text-muted mb-0">Account</p>
+                    </div>
+                </div>
+            </div>
 
-{% block title %}Hello UserController!{% endblock %}
+            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p>
 
+            <ul class="nav flex-column bg-white mb-0" id="navId">
+                <li class="nav-item">
+                    <a href="" class="nav-link text-dark font-italic bg-light btnLoad_screen" id="navIDScript" call_type="{{ path('account_general') }}">
+                        <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                        Général
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link text-dark font-italic btnLoad_screen" id="navIDScript" call_type="{{ path('account_password') }}">
+                        <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                        password
+                    </a>
+                </li>
+            </ul>
 
+            <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Charts</p>
 
-{% block body %}
+            <ul class="nav flex-column bg-white mb-0">
+            </ul>
+        </div>
 
-{% endblock %}
+        <div class="page-content p-5" id="content">
+			<button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm mb-4" style="
+            position: absolute;"><i class="fa fa-bars"></i></button>
+			<div class="post_msg">
+            	<div class="load"></div>
+
+                <div class="block-mid">
+                {% include "/user/general.html.twig" %}
+				{% block body %}
+				{% endblock %}
+                </div>
+			</div>
+		</div>
+
+        <script>
+		
+		
+        $(function() {
+        // Sidebar toggle behavior
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar, #content').toggleClass('active');
+            });
+        });
+
+		$(document).ready(function($)
+		{
+			$(document).on('click', '.btnLoad_screen', function(event)
+			{	
+
+				if ($(".btnLoad_screen").is(".pendingResult")) { return console.log("je suis la"); }
+				$(".btnLoad_screen").addClass("pendingResult");
+
+				$(".load").addClass("loader");
+
+                $(".block-mid").addClass("opacity-50")
+				event.preventDefault();
+
+				var call_type = $(this).attr('call_type');
+
+				var pageUrl = $(this).attr('call_type');
+				window.history.pushState("", "", pageUrl);
+				$.getJSON("{{ path('ajax_redirect') }}", {call_type: call_type}, function(data, textStatus, xhr)
+				{
+					$(".load").removeClass("loader");
+                    $(".block-mid").removeClass("opacity-50")
+					$(document).find('.block-mid').html(data.template);
+					//window.history.pushState("", "", "{{ path('ajax_redirect') }}");
+
+                    if(data.status == "success") {
+                        $(".btnLoad_screen").removeClass("pendingResult");
+                    }
+				});
+			});
+		});
+
+				$(document).ready(function () {
+			        $(document).ready(function(){
+				    $('a').click(function(){
+					    $('a').removeClass("bg-light");
+					    $(this).addClass("bg-light");
+				    });
+			    });
+    	})
+	</script>
+
+</body>

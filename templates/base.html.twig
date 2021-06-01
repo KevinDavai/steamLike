@@ -6,15 +6,14 @@
         {# Run `composer require symfony/webpack-encore-bundle`
            and uncomment the following Encore helpers to start using Symfony UX #}
         <link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         {% block stylesheets %}
             {#{{ encore_entry_link_tags('app') }}#}
-        <link href="/css/account.css" rel="stylesheet">
         {% endblock %}
     </head>
 
     {% block javascripts %}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
     <script type="text/javascript">
                 /**
                  * Get the submit buttons from the given form
