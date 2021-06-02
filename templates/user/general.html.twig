@@ -1,19 +1,31 @@
 
+
 {% block body %}
 
 <div class="px-5 pt-4">
-<h3 class="text-left"> Information page général</h3>
-  <div class="row pt-4">
+<blockquote class="blockquote">
+  <p class="mb-0 pb-3 h4"><strong>PARAMÈTRES GÉNÉRAUX</strong></p>
+  <footer class="blockquote-footer">Gérez les informations de compte que vous avez partagées avec StimLike, dont votre nom, vos informations de contact et plus</footer>
+  <p class="mb-0 pt-5 pb-3 h4"><strong>INFOS DE COMPTE</strong></p>
+
+</blockquote>
+
+  <form>
+  <div class="row">
     <div class="col">
-      <input type="text" class="form-control" placeholder="First name">
+      <input type="text" class="form-control form-control-lg"  id="disabledInput" placeholder="N0urs86" disabled="">
     </div>
-    <button type="button" class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal">
-  Launch demo modal
-</button>
+        <div class="btn-group" role="group" aria-label="Third group">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Edit</button>
+    </div>
     <div class="col">
-      <input type="text" class="form-control" placeholder="Last name">
+      <input type="text" class="form-control form-control-lg"  id="disabledInput" placeholder="emaill@gmail.com" disabled="">
+    </div>
+        <div class="btn-group" role="group" aria-label="Third group">
+      <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">Edit</button>
     </div>
   </div>
+</form>
 </div>
 
 
@@ -28,11 +40,16 @@
         </button>
       </div>
       <div class="modal-body">
-        ...
+      {{ form_start(form) }}
+    
+    {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'attr': {'placeholder': 'Nom d\'utilisateur ...'}}) }}
+
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="submit" class="btn btn-success" data-toggle="modal" data-target="#dataModal" href="#">Save Change</button>
+{{ form_end(form) }}
       </div>
     </div>
   </div>

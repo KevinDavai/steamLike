@@ -15,7 +15,7 @@
             <div class="py-4 px-3 mb-4 bg-light">
                 <div class="media d-flex align-items-center">
                     <div class="media-body">
-                        <h4 class="m-0">sdfgsdgdsfgsdgdsg</h4>
+                        <h4 class="m-0">{{ user.getUsername() }}</h4>
                             <p class="font-weight-light text-muted mb-0">Account</p>
                     </div>
                 </div>
@@ -51,6 +51,7 @@
             	<div class="load"></div>
 
                 <div class="block-mid">
+                
                 {% include "/user/general.html.twig" %}
 				{% block body %}
 				{% endblock %}
