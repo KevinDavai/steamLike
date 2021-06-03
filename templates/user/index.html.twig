@@ -11,7 +11,7 @@
     </head>
 
     <body>
-        <div class="vertical-nav bg-white" id="sidebar">
+<div class="vertical-nav bg-white" id="sidebar">
             <div class="py-4 px-3 mb-4 bg-light">
                 <div class="media d-flex align-items-center">
                     <div class="media-body">
@@ -50,14 +50,25 @@
 			<div class="post_msg">
             	<div class="load"></div>
 
-                <div class="block-mid">
-                
-                {% include "/user/general.html.twig" %}
-				{% block body %}
-				{% endblock %}
+                <div class="block-mid" id="detect">
+
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+   
+
+
                 </div>
-			</div>
-		</div>
+            </div>
+        </div>
+        {% block body %}
+        {% endblock %}
 
 <script src="/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -75,20 +86,52 @@
             });
         });
 
+         function isEmpty( el ){
+            return !$.trim(el.html())
+        }
+
+
 		$(document).ready(function($)
 		{
+              if (isEmpty($('#detect'))) {
+                $(".load").addClass("loader");
+
+                $(".block-mid").addClass("opacity-50")
+				var call_type = "/account/general";
+                console.log(call_type);
+
+				window.history.pushState("", "", call_type);
+				$.getJSON("{{ path('ajax_redirect') }}", {call_type: call_type}, function(data, textStatus, xhr)
+				{
+					$(".load").removeClass("loader");
+                    $(".block-mid").removeClass("opacity-50")
+                
+					    $(document).find('.block-mid').html(data.template);
+                
+					//window.history.pushState("", "", "{{ path('ajax_redirect') }}");
+
+                    if(data.status == "success") {
+                        $(".btnLoad_screen").removeClass("pendingResult");
+                    }
+				});
+
+             }
+
+
 			$(document).on('click', '.btnLoad_screen', function(event)
 			{	
-
+        
 				if ($(".btnLoad_screen").is(".pendingResult")) { return console.log("je suis la"); }
 				$(".btnLoad_screen").addClass("pendingResult");
 
 				$(".load").addClass("loader");
 
                 $(".block-mid").addClass("opacity-50")
+                console.log("salut");
 				event.preventDefault();
 
 				var call_type = $(this).attr('call_type');
+                console.log(call_type);
 
 				var pageUrl = $(this).attr('call_type');
 				window.history.pushState("", "", pageUrl);
@@ -96,7 +139,9 @@
 				{
 					$(".load").removeClass("loader");
                     $(".block-mid").removeClass("opacity-50")
-					$(document).find('.block-mid').html(data.template);
+                
+					    $(document).find('.block-mid').html(data.template);
+                
 					//window.history.pushState("", "", "{{ path('ajax_redirect') }}");
 
                     if(data.status == "success") {
@@ -105,7 +150,6 @@
 				});
 			});
 		});
-
 				$(document).ready(function () {
 			        $(document).ready(function(){
 				    $('a').click(function(){
@@ -114,6 +158,28 @@
 				    });
 			    });
     	})
+
+      $(document).on('click','#form', function(e){
+        console.log("click");
+        
+        console.log($('form').serialize());
+        $.ajax({
+          
+  method: "POST", // défini le type d'envoi de données, post ou get
+  url : "{{path('ajax_redirect') }}",  // l'url de réception des données
+  data : $('form').serialize(), // tes données sérialisé de ton formule que tu envoies au controller
+})
+  .done(function(response) {
+      window.location.reload();
+  })
+  .fail(function() {
+    alert( "error" );
+  });
+ 
+});
+
+
+
 	</script>
 
 

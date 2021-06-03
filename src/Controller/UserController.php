@@ -16,8 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
-    private $pageURL;
-    private $formUsername;
 
     #[Route('/account/general', name: 'account_general')]
       public function index(Request $request): Response
@@ -27,16 +25,13 @@ class UserController extends AbstractController
 
       $user = $this->getUser();
       $form = $this->createForm(EditProfileType::class, $user);
-  
       $form->handleRequest($request);
-  
+
       if($form->isSubmitted() && $form->isValid()) {
         $em = $this->getDoctrine()->getManager();
         $em->persist($user);
         $em->flush();
-  
-        $this->addFlash('message', 'profil update');
-      }
+        }
 
         return $this->render('user/index.html.twig', [
             'controller_name' => 'UserController',
@@ -57,6 +52,23 @@ class UserController extends AbstractController
      */
     public function ajax_noReloadUrl(Request $request)
     {
+
+      $user = $this->getUser();
+      $formName = $this->createForm(EditProfileType::class, $user);
+
+
+      if ($request->isMethod('POST')) {
+        $formName->submit($request->request->get($formName->getName()));
+      }
+      
+      if($formName->isSubmitted() && $formName->isValid()) {
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($user);
+        $em->flush();
+
+        return $this->redirect('/account/general');
+      }
+
       if(isset($_GET['call_type']))
       {
         $call_type = $request->query->get('call_type');   
@@ -77,11 +89,14 @@ class UserController extends AbstractController
         }
         else if($call_type == "/account/general")
         {
-          $template = $this->render('/user/general.html.twig')->getContent();
+          $template = $this->render('user/general.html.twig', [
+            'form' => $formName->createView(),
+          ])->getContent();
 
           $response = new Response(json_encode(array(
             'status'=>'success',
             'template' => $template,
+            'form' => $formName,
           )));
 
           $response->headers->set('Content-Type', 'application/json');
@@ -89,44 +104,5 @@ class UserController extends AbstractController
           return $response;
         }
       } 
-
     }
-
-    public function editPseudoFormCreate(Request $request) {
-      $user = $this->getUser();
-
-      $form = $this->createForm(EditPseudoType::class, $user);
-
-      $form->handleRequest($request);
-
-      if($form->isSubmitted() && $form->isValid()) {
-          $manager->flush();
-      }
-
-      return $form;
-  }
-
-  #[Route('/account/general', name: 'edit_profile_pseudo')]
-  public function registration(Request $request) {
-  
-    $user = $this->getUser();
-    $form = $this->createForm(EditProfileType::class, $user);
-
-    $form->handleRequest($request);
-
-    if($form->isSubmitted() && $form->isValid()) {
-      $em = $this->getDoctrine()->getManager();
-      $em->persist($user);
-      $em->flush();
-
-      $this->addFlash('message', 'profil update');
-    }
-
-    return $this->render('user/index.html.twig', [
-        'form' => $form->createView()   
-    ]);
-}
-
-
-
 }

@@ -1,0 +1,39 @@
+
+<div class="vertical-nav bg-white" id="sidebar">
+            <div class="py-4 px-3 mb-4 bg-light">
+                <div class="media d-flex align-items-center">
+                    <div class="media-body">
+                        <h4 class="m-0">sdfgdsfh</h4>
+                            <p class="font-weight-light text-muted mb-0">Account</p>
+                    </div>
+                </div>
+            </div>
+
+            <p class="text-gray font-weight-bold text-uppercase px-3 small pb-4 mb-0">Main</p>
+
+            <ul class="nav flex-column bg-white mb-0" id="navId">
+                <li class="nav-item">
+                    <a href="" class="nav-link text-dark font-italic bg-light btnLoad_screen" id="navIDScript" call_type="{{ path('account_general') }}">
+                        <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+                        Général
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="" class="nav-link text-dark font-italic btnLoad_screen" id="navIDScript" call_type="{{ path('account_password') }}">
+                        <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+                        password
+                    </a>
+                </li>
+            </ul>
+
+            <p class="text-gray font-weight-bold text-uppercase px-3 small py-4 mb-0">Charts</p>
+
+            <ul class="nav flex-column bg-white mb-0">
+            </ul>
+        </div>
+
+        {% block body %}
+        {% endblock %}
+        
+
+        
