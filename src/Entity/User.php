@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Security\Core\User\EquatableInterface;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
@@ -14,7 +15,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
  *  message="L'email que vous avez indiqué est déjà utilisé !"
  * )
  */
-class User implements UserInterface
+class User implements UserInterface, EquatableInterface
 {
     /**
      * @ORM\Id
@@ -31,6 +32,12 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *      min = 3,  
+     *      max = 10,
+     *      minMessage = "Votre nom d'utilisateur doit contenir au minimum {{ limit }} charactères",
+     *      maxMessage = "Votre nom d'utilisateur doit contenir au maximum {{ limit }} charactères"
+     * )
      */
     private $username;
 
@@ -55,14 +62,17 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Votre nom ne peux pas contenir de charactères speciaux")
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=100)
+     * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Votre prénom ne peux pas contenir de charactères speciaux")
      */
     private $firstname;
-    
+
+
     public function getCaptcha()
     {
       return $this->captcha;
@@ -158,5 +168,22 @@ class User implements UserInterface
         $this->firstname = $firstname;
 
         return $this;
+    }
+
+    public function isEqualTo(UserInterface $user)
+    {
+        if (!$user instanceof User) {
+            return false;
+        }
+
+        if ($this->password !== $user->getPassword()) {
+            return false;
+        }
+
+        if ($this->username !== $user->getUsername()) {
+            return false;
+        }
+
+        return true;
     }
 }

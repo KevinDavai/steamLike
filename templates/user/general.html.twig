@@ -33,15 +33,17 @@
         </button>
       </div>
       <div class="modal-body">
-      {{ form_start(form) }}
+      <div class="errorrr">
+      </div>
+      
+      {{ form_start(form, {'attr': {'id': 'form_person_edit'}}) }}
     
       {{ form_row(form.username, { 'label': 'Nom d\'utilisateur', 'attr': {'placeholder': 'Nom d\'utilisateur ...'}}) }}
-
 
       </div>
       <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                              <button type="submit" class="btn btn-success" id="form" data-toggle="modal" data-target="#dataModal" href="">Save Change</button>
+          <button type="submit" class="btn btn-success" id="form" data-toggle="modal" data-target="#dataModal" href="">Save Change</button>
 
           {{ form_end(form) }}
       </div>

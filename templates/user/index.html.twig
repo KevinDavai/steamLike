@@ -4,14 +4,14 @@
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
 
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 		<link rel="stylesheet" href="https://bootswatch.com/4/flatly/bootstrap.min.css">
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
         <link href="/css/account.css" rel="stylesheet">
     </head>
 
     <body>
-<div class="vertical-nav bg-white" id="sidebar">
+        <div class="vertical-nav bg-white" id="sidebar">
             <div class="py-4 px-3 mb-4 bg-light">
                 <div class="media d-flex align-items-center">
                     <div class="media-body">
@@ -25,13 +25,13 @@
 
             <ul class="nav flex-column bg-white mb-0" id="navId">
                 <li class="nav-item">
-                    <a href="" class="nav-link text-dark font-italic bg-light btnLoad_screen" id="navIDScript" call_type="{{ path('account_general') }}">
+                    <a href="" class="nav-link text-dark font-italic bg-light btnLoad_screen general_page" id="navIDScript" call_type="{{ path('account_general') }}">
                         <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
                         Général
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a href="" class="nav-link text-dark font-italic btnLoad_screen" id="navIDScript" call_type="{{ path('account_password') }}">
+                    <a href="" class="nav-link text-dark font-italic btnLoad_screen password_page" id="navIDScript" call_type="{{ path('account_password') }}">
                         <i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
                         password
                     </a>
@@ -45,142 +45,149 @@
         </div>
 
         <div class="page-content p-5" id="content">
-			<button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm mb-4" style="
-            position: absolute;"><i class="fa fa-bars"></i></button>
-			<div class="post_msg">
-            	<div class="load"></div>
+			<button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm mb-4" style="position: absolute;"><i class="fa fa-bars"></i></button>
+			    <div class="post_msg">
+            	    <div class="load"></div>
 
-                <div class="block-mid" id="detect">
-
-
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-   
-
-
+                    <div class="block-mid" id="detect">
+                        
+                    
+                    </div>
                 </div>
-            </div>
         </div>
+
         {% block body %}
         {% endblock %}
 
-<script src="/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+        <script src="/js/bootstrap.bundle.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
         <script>
-		
-		
-        $(function() {
-        // Sidebar toggle behavior
-            $('#sidebarCollapse').on('click', function() {
-                $('#sidebar, #content').toggleClass('active');
+            $(function() {
+                $('#sidebarCollapse').on('click', function() {
+                    $('#sidebar, #content').toggleClass('active');
+                });
             });
-        });
 
-         function isEmpty( el ){
-            return !$.trim(el.html())
-        }
+            function isEmpty( el ){
+                return !$.trim(el.html())
+            }
 
 
-		$(document).ready(function($)
-		{
-              if (isEmpty($('#detect'))) {
-                $(".load").addClass("loader");
+		    $(document).ready(function($)
+		    {
+                if (isEmpty($('#detect'))) {
+				    $('a').click(function(){
+					    $('a').removeClass("bg-light");
+					    $(this).addClass("bg-light");
+				    });
 
-                $(".block-mid").addClass("opacity-50")
-				var call_type = "/account/general";
-                console.log(call_type);
+                    $(".load").addClass("loader");
 
-				window.history.pushState("", "", call_type);
-				$.getJSON("{{ path('ajax_redirect') }}", {call_type: call_type}, function(data, textStatus, xhr)
-				{
-					$(".load").removeClass("loader");
-                    $(".block-mid").removeClass("opacity-50")
+                    $(".block-mid").addClass("opacity-50")
+				    var call_type = window.location.pathname;
+                    console.log(call_type);
+
+                    switch(call_type){
+                        case "/account/general":
+                            $(".general_page").addClass("bg-light");
+                            $(".password_page").removeClass("bg-light");
+                            break;
+                        case "/account/password":
+                            $(".general_page").removeClass("bg-light");
+                            $(".password_page").addClass("bg-light");
+                            break;
+                    }
+
+				    window.history.pushState("", "", call_type);
+				    $.getJSON("{{ path('ajax_redirect') }}", {call_type: call_type}, function(data, textStatus, xhr)
+				    {
+					    $(".load").removeClass("loader");
+                        $(".block-mid").removeClass("opacity-50")
                 
 					    $(document).find('.block-mid').html(data.template);
                 
 					//window.history.pushState("", "", "{{ path('ajax_redirect') }}");
 
-                    if(data.status == "success") {
-                        $(".btnLoad_screen").removeClass("pendingResult");
-                    }
-				});
+                        if(data.status == "success") {
+                            $(".btnLoad_screen").removeClass("pendingResult");
+                        }
+				    });
+                }
 
-             }
-
-
-			$(document).on('click', '.btnLoad_screen', function(event)
-			{	
+			    $(document).on('click', '.btnLoad_screen', function(event)
+			    {	
         
-				if ($(".btnLoad_screen").is(".pendingResult")) { return console.log("je suis la"); }
-				$(".btnLoad_screen").addClass("pendingResult");
+                    if ($(".btnLoad_screen").is(".pendingResult")) { return console.log("je suis la"); }
+                    $(".btnLoad_screen").addClass("pendingResult");
 
-				$(".load").addClass("loader");
+                    $(".load").addClass("loader");
 
-                $(".block-mid").addClass("opacity-50")
-                console.log("salut");
-				event.preventDefault();
+                    $(".block-mid").addClass("opacity-50")
+                    console.log("salut");
+                    event.preventDefault();
 
-				var call_type = $(this).attr('call_type');
-                console.log(call_type);
+                    var call_type = $(this).attr('call_type');
+                    console.log(call_type);
 
-				var pageUrl = $(this).attr('call_type');
-				window.history.pushState("", "", pageUrl);
-				$.getJSON("{{ path('ajax_redirect') }}", {call_type: call_type}, function(data, textStatus, xhr)
-				{
-					$(".load").removeClass("loader");
-                    $(".block-mid").removeClass("opacity-50")
+                    var pageUrl = $(this).attr('call_type');
+                    window.history.pushState("", "", pageUrl);
+                    $.getJSON("{{ path('ajax_redirect') }}", {call_type: call_type}, function(data, textStatus, xhr)
+				    {
+					    $(".load").removeClass("loader");
+                        $(".block-mid").removeClass("opacity-50")
                 
 					    $(document).find('.block-mid').html(data.template);
                 
 					//window.history.pushState("", "", "{{ path('ajax_redirect') }}");
 
-                    if(data.status == "success") {
-                        $(".btnLoad_screen").removeClass("pendingResult");
-                    }
-				});
-			});
-		});
-				$(document).ready(function () {
-			        $(document).ready(function(){
+                        if(data.status == "success") {
+                            $(".btnLoad_screen").removeClass("pendingResult");
+                        }
+				    });
+			    });
+		    });
+
+			$(document).ready(function () {
+			    $(document).ready(function(){
 				    $('a').click(function(){
 					    $('a').removeClass("bg-light");
 					    $(this).addClass("bg-light");
 				    });
 			    });
-    	})
+    	    })
 
-      $(document).on('click','#form', function(e){
-        console.log("click");
+            $(document).on('click','#form', function(e){
+                console.log("click");
         
-        console.log($('form').serialize());
-        $.ajax({
-          
-  method: "POST", // défini le type d'envoi de données, post ou get
-  url : "{{path('ajax_redirect') }}",  // l'url de réception des données
-  data : $('form').serialize(), // tes données sérialisé de ton formule que tu envoies au controller
-})
-  .done(function(response) {
-      window.location.reload();
-  })
-  .fail(function() {
-    alert( "error" );
-  });
+                    var data = $('form').serializeArray(); // convert form to array
+                                     var token =  $('input[name="edit_profile[_token]"]').attr('value')
+
+                    data.push({name: "edit_profile[_token]", value: token});
+                    data.push({name: "_csrf_token", value: token});
+
+                console.log($('form').serialize());
  
-});
+                $.ajax({
+                    method: "POST", // défini le type d'envoi de données, post ou get
 
+                    url : "{{path('ajax_redirect') }}",  // l'url de réception des données
+                    data : data, // tes données sérialisé de ton formule que tu envoies au controller
+                })
+                .done(function(response) {
+                    console.log(response.errors);
+                    if(!response.errors){
+                        $(document).find('.errorrr').html('<div class="alert alert-success">Votre pseudo a été mis à jour !</div>');
+                        window.location.reload();
+                    }
+                    else {
+					    $(document).find('.errorrr').html('<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Error</span> <span class="form-error-message">' + response.errors.username[0] + '</span></span></span>');
+                    }
+                })
+            });
+	    </script>
+    </body>
+</html>
 
-
-	</script>
-
-
-</body>
