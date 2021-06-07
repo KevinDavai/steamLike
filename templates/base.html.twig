@@ -15,67 +15,67 @@
 		{% endblock %}
 	</head>
 
-    {% block javascripts %}
-    <script type="text/javascript">
-                /**
+	{% block javascripts %}
+		<script type="text/javascript">
+			/**
                  * Get the submit buttons from the given form
                  */
-                function getSubmitButtons(form) {
-                    var buttons = form.querySelectorAll('button, input');
-                    var submitButtons = [];
-                    for (var i= 0; i < buttons.length; i++) {
-                        var button = buttons[i];
-                        if (button.getAttribute('type') == 'submit') {
-                            submitButtons.push(button);
-                        }
-                    }
-                    return submitButtons;
-                }
-                /**
+function getSubmitButtons(form) {
+var buttons = form.querySelectorAll('button, input');
+var submitButtons = [];
+for (var i = 0; i < buttons.length; i++) {
+var button = buttons[i];
+if (button.getAttribute('type') == 'submit') {
+submitButtons.push(button);
+}
+}
+return submitButtons;
+}
+/**
                  * Prevent the submit buttons from submitting a form
                  * and invoke the challenge for the given widget id
                  */
-                function bindChallengeToSubmitButtons(form, reCaptchaId) {
-                    getSubmitButtons(form).forEach(function (button) {
-                        button.addEventListener('click', function (e) {
-                            e.preventDefault();
-                            grecaptcha.execute(reCaptchaId);
-                        });
-                    });
-                }
-                /**
+function bindChallengeToSubmitButtons(form, reCaptchaId) {
+getSubmitButtons(form).forEach(function (button) {
+button.addEventListener('click', function (e) {
+e.preventDefault();
+grecaptcha.execute(reCaptchaId);
+});
+});
+}
+/**
                  * Render a reCAPTCHA from the type
                  */
-                function renderReCaptcha(widget) {
-                    var form = widget.closest('form');
-                    var widgetType = widget.getAttribute('data-type');
-                    var widgetParameters = {
-                        'sitekey': '{{ gg_recaptcha_site_key }}'
-                    };
-                    if (widgetType == 'invisible') {
-                        widgetParameters['callback'] = function () {
-                            form.submit()
-                        };
-                        widgetParameters['size'] = "invisible";
-                    }
-                    var widgetId = grecaptcha.render(widget, widgetParameters);
-                    if (widgetType == 'invisible') {
-                        bindChallengeToSubmitButtons(form, widgetId)
-                    }
-                }
-                /**
+function renderReCaptcha(widget) {
+var form = widget.closest('form');
+var widgetType = widget.getAttribute('data-type');
+var widgetParameters = {
+'sitekey': '{{ gg_recaptcha_site_key }}'
+};
+if (widgetType == 'invisible') {
+widgetParameters['callback'] = function () {
+form.submit()
+};
+widgetParameters['size'] = "invisible";
+}
+var widgetId = grecaptcha.render(widget, widgetParameters);
+if (widgetType == 'invisible') {
+bindChallengeToSubmitButtons(form, widgetId)
+}
+}
+/**
                  * The callback function executed
                  * once all the Google dependencies have loaded
                  */
-                function onGoogleReCaptchaLoad() {
-                    var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
-                    for (var i = 0; i < widgets.length; i++) {
-                        renderReCaptcha(widgets[i]);
-                    }
-                }
-            </script>
-            <script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaLoad&render=explicit"></script>
-    {% endblock %}
+function onGoogleReCaptchaLoad() {
+var widgets = document.querySelectorAll('[data-toggle="recaptcha"]');
+for (var i = 0; i < widgets.length; i++) {
+renderReCaptcha(widgets[i]);
+}
+}
+		</script>
+		<script type="text/javascript" src="https://www.google.com/recaptcha/api.js?onload=onGoogleReCaptchaLoad&render=explicit"></script>
+	{% endblock %}
 
 	<body>
 		<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
@@ -90,41 +90,49 @@
 						<li class="nav-item">
 							<a class="nav-link active" href="{{ path('home') }}">Home</a>
 						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active" href="#">Magasin</a>
+						</li>
+
+						<li class="nav-item">
+							<a class="nav-link active" href="#">Bibliothèque</a>
+						</li>
+
+
 						{% if app.user %}
 							<li class="nav-item dropdown">
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="#">Action</a>
-									<a class="dropdown-item" href="#">Another action</a>
-									<a class="dropdown-item" href="#">Something else here</a>
+									<a class="dropdown-item" href="/account/general">Compte</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="#">Separated link</a>
+									<a class="dropdown-item" href="/logout">Déconnexion</a>
 								</div>
 							</li>
 
 
 						{% endif %}
-						<li class="nav-item dropdown">
-							<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Dropdown</a>
-							<div class="dropdown-menu">
-								<a class="dropdown-item" href="#">Action</a>
-								<a class="dropdown-item" href="#">Another action</a>
-								<a class="dropdown-item" href="#">Something else here</a>
-								<div class="dropdown-divider"></div>
-								<a class="dropdown-item" href="#">Separated link</a>
-							</div>
-						</li>
+						{% if not app.user %}
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="/connexion">Connexion</a>
+									<div class="dropdown-divider"></div>
+									<a class="dropdown-item" href="/inscription">Inscription</a>
+								</div>
+							</li>
+						{% endif %}
 					</ul>
 				</div>
 			</div>
 		</nav>
 		<div class="container"> {% block body %}{% endblock %}
-		</div>
+			</div>
 
-<script src="/js/bootstrap.bundle.min.js"></script>
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+			<script src="/js/bootstrap.bundle.min.js"></script>
+			<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+			<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+			<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
 		</body>
 	</html>
