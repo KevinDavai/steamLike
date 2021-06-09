@@ -17,8 +17,24 @@ class SteamController extends AbstractController
     }
 
     #[Route('/', name: 'home')]
-    public function home(): Response 
+    public function home(): Response
     {
         return $this->render('steam/home.html.twig');
+    }
+
+    /**
+     * @Route("/steam/store", name="steam_store")
+     */
+    public function store(): Response
+    {
+        return $this->render('steam/store.html.twig');
+    }
+
+    /**
+     * @Route("/steam/library", name="steam_library")
+     */
+    public function library(): Response
+    {
+        return $this->render('steam/library.html.twig');
     }
 }

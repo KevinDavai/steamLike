@@ -17,119 +17,115 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class UserController extends AbstractController
 {
 
-    #[Route('/account/general', name: 'account_general')]
-      public function index(Request $request): Response
-    {
-      $repository = $this->getDoctrine()->getRepository(User::class);
-      $userLoged = $repository->find($this->getUser()->getId());
-    
-        return $this->render('user/index.html.twig', [
-            'controller_name' => 'UserController',
-            'user' => $userLoged,
-        ]);
+  #[Route('/account/general', name: 'account_general')]
+  public function index(Request $request): Response
+  {
+    $repository = $this->getDoctrine()->getRepository(User::class);
+    $userLoged = $repository->find($this->getUser()->getId());
+
+    return $this->render('user/index.html.twig', [
+      'controller_name' => 'UserController',
+      'user' => $userLoged,
+    ]);
+  }
+
+
+  #[Route('/account/password', name: 'account_password')]
+  public function change_password(): Response
+  {
+    $user = $this->getUser();
+    return $this->render('user/index.html.twig', [
+      'user' => $user,
+      'controller_name' => 'UserController',
+    ]);
+  }
+
+  /**
+   * @Route("/ajax/redirect", name="ajax_redirect")
+   */
+  public function ajax_noReloadUrl(Request $request)
+  {
+    $user = $this->getUser();
+    $name = $this->getUser()->getUsername();
+    $formName = $this->createForm(EditProfileType::class, $user);
+
+    $formName->handleRequest($request);
+
+    if ($formName->isSubmitted() && !$formName->isValid()) {
+      $response = new Response(json_encode(array(
+        'status' => 'error',
+        'errors' => $this->getErrorMessages($formName)
+      )));
+
+      $response->headers->set('Content-Type', 'application/json');
+
+      $user->setUsername($name);
+
+      return $response;
     }
-    
 
-    #[Route('/account/password', name: 'account_password')]
-    public function change_password(): Response
-    {
-      $user = $this->getUser();
-      return $this->render('user/index.html.twig', [
-        'user' => $user,
-        'controller_name' => 'UserController',
-        ]);
+    if ($formName->isSubmitted() && $formName->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($user);
+      $em->flush();
+
+      return $this->redirect('/account/general');
     }
 
-    /**
-     * @Route("/ajax/redirect", name="ajax_redirect")
-     */
-    public function ajax_noReloadUrl(Request $request)
-    {
-      $user = $this->getUser();
-      $name = $this->getUser()->getUsername();
-      $formName = $this->createForm(EditProfileType::class, $user);
+    if (isset($_GET['call_type'])) {
+      $call_type = $request->query->get('call_type');
 
-      $formName->handleRequest($request);
+      if ($call_type == "/account/password") {
 
-      if($formName->isSubmitted() && !$formName->isValid()) {
+        $template = $this->render('/user/password.html.twig')->getContent();
+
         $response = new Response(json_encode(array(
-          'status'=>'error',
-          'errors' => $this->getErrorMessages($formName)
+          'status' => 'success',
+          'template' => $template,
         )));
-        
+
         $response->headers->set('Content-Type', 'application/json');
 
-        $user->setUsername($name);
+        return $response;
+      } else if ($call_type == "/account/general") {
+        $template = $this->render('user/general.html.twig', [
+          'form' => $formName->createView(),
+        ])->getContent();
+
+        $response = new Response(json_encode(array(
+          'status' => 'success',
+          'template' => $template,
+          'form' => $formName,
+        )));
+
+        $response->headers->set('Content-Type', 'application/json');
 
         return $response;
       }
-      
-      if($formName->isSubmitted() && $formName->isValid()) {
-        $em = $this->getDoctrine()->getManager();            
-        $em->persist($user);
-        $em->flush();
-        
-        return $this->redirect('/account/general');
-      }
-
-      if(isset($_GET['call_type']))
-      {
-        $call_type = $request->query->get('call_type');   
-
-        if($call_type == "/account/password")
-        {
-                  
-          $template = $this->render('/user/password.html.twig')->getContent();
-
-          $response = new Response(json_encode(array(
-            'status'=>'success',
-            'template' => $template,
-          )));
-          
-          $response->headers->set('Content-Type', 'application/json');
-          
-          return $response;
-        }
-        else if($call_type == "/account/general")
-        {
-          $template = $this->render('user/general.html.twig', [
-            'form' => $formName->createView(),
-          ])->getContent();
-
-          $response = new Response(json_encode(array(
-            'status'=>'success',
-            'template' => $template,
-            'form' => $formName,
-          )));
-
-          $response->headers->set('Content-Type', 'application/json');
-          
-          return $response;
-        }
-      }
-      
-      return $this->render('user/index.html.twig', [
-        'user' => $user,
-        'form' => $formName->createView()   
-      ]);
     }
 
+    return $this->render('user/index.html.twig', [
+      'user' => $user,
+      'form' => $formName->createView()
+    ]);
+  }
 
-        // Generate an array contains a key -> value with the errors where the key is the name of the form field
-        protected function getErrorMessages(\Symfony\Component\Form\Form $form) 
-        {
-            $errors = array();
-    
-            foreach ($form->getErrors() as $key => $error) {
-                $errors[] = $error->getMessage();
-            }
-    
-            foreach ($form->all() as $child) {
-                if (!$child->isValid()) {
-                    $errors[$child->getName()] = $this->getErrorMessages($child);
-                }
-            }
-    
-            return $errors;
-        }
+
+  // Generate an array contains a key -> value with the errors where the key is the name of the form field
+  protected function getErrorMessages(\Symfony\Component\Form\Form $form)
+  {
+    $errors = array();
+
+    foreach ($form->getErrors() as $key => $error) {
+      $errors[] = $error->getMessage();
+    }
+
+    foreach ($form->all() as $child) {
+      if (!$child->isValid()) {
+        $errors[$child->getName()] = $this->getErrorMessages($child);
+      }
+    }
+
+    return $errors;
+  }
 }
