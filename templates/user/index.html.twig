@@ -162,13 +162,13 @@
             $(document).on('click','#form', function(e){
                 console.log("click");
         
-                    var data = $('form').serializeArray(); // convert form to array
+                    var data = $('#form_pseudo_edit').serializeArray(); // convert form to array
                                      var token =  $('input[name="edit_profile[_token]"]').attr('value')
 
                     data.push({name: "edit_profile[_token]", value: token});
                     data.push({name: "_csrf_token", value: token});
 
-                console.log($('form').serialize());
+                console.log($('#form_pseudo_edit').serialize());
  
                 $.ajax({
                     method: "POST", // défini le type d'envoi de données, post ou get
@@ -184,6 +184,36 @@
                     }
                     else {
 					    $(document).find('.errorrr').html('<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Error</span> <span class="form-error-message">' + response.errors.username[0] + '</span></span></span>');
+                    }
+                })
+            });
+
+                        $(document).on('click','#formEmail', function(e){
+                console.log("click");
+        
+                    var data = $('#form_email_edit').serializeArray(); // convert form to array
+                                     var token =  $('input[name="edit_email_profile[_token]"]').attr('value')
+
+                    data.push({name: "edit_email_profile[_token]", value: token});
+                    data.push({name: "_csrf_token", value: token});
+
+                console.log($('#form_email_edit').serialize());
+                console.log(data);
+ 
+                $.ajax({
+                    method: "POST", // défini le type d'envoi de données, post ou get
+
+                    url : "{{path('ajax_redirect') }}",  // l'url de réception des données
+                    data : data, // tes données sérialisé de ton formule que tu envoies au controller
+                })
+                .done(function(response) {
+                    console.log(response.errors);
+                    if(!response.errors){
+                        $(document).find('.errorrr').html('<div class="alert alert-success">Votre pseudo a été mis à jour !</div>');
+                        window.location.reload();
+                    }
+                    else {
+					    $(document).find('.errorrr').html('<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Error</span> <span class="form-error-message">' + response.errors.email[0] + '</span></span></span>');
                     }
                 })
             });

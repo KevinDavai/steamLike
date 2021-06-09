@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditPseudoType;
 use App\Form\EditProfileType;
+use App\Form\EditEmailProfileType;
 use App\Repository\UserRepository;
 
 use Symfony\Component\HttpFoundation\Request;
@@ -28,6 +29,7 @@ class UserController extends AbstractController
       'user' => $userLoged,
     ]);
   }
+
 
 
   #[Route('/account/password', name: 'account_password')]
@@ -72,6 +74,33 @@ class UserController extends AbstractController
       return $this->redirect('/account/general');
     }
 
+    $email = $this->getUser()->getEmail();
+
+    $FormEmail = $this->createForm(EditEmailProfileType::class, $user);
+
+    $FormEmail->handleRequest($request);
+
+    if ($FormEmail->isSubmitted() && !$FormEmail->isValid()) {
+      $response = new Response(json_encode(array(
+        'status' => 'error',
+        'errors' => $this->getErrorMessages($FormEmail)
+      )));
+
+      $response->headers->set('Content-Type', 'application/json');
+
+      $user->setEmail($email);
+
+      return $response;
+    }
+
+    if ($FormEmail->isSubmitted() && $FormEmail->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($user);
+      $em->flush();
+
+      return $this->redirect('/account/general');
+    }
+
     if (isset($_GET['call_type'])) {
       $call_type = $request->query->get('call_type');
 
@@ -89,13 +118,17 @@ class UserController extends AbstractController
         return $response;
       } else if ($call_type == "/account/general") {
         $template = $this->render('user/general.html.twig', [
+          'user' => $user,
+          'formEmail' => $FormEmail->createView(),
           'form' => $formName->createView(),
         ])->getContent();
 
         $response = new Response(json_encode(array(
           'status' => 'success',
           'template' => $template,
+          'formEmail' => $FormEmail,
           'form' => $formName,
+          'user' => $user,
         )));
 
         $response->headers->set('Content-Type', 'application/json');
@@ -103,11 +136,6 @@ class UserController extends AbstractController
         return $response;
       }
     }
-
-    return $this->render('user/index.html.twig', [
-      'user' => $user,
-      'form' => $formName->createView()
-    ]);
   }
 
 
