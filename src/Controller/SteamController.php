@@ -2,12 +2,16 @@
 
 namespace App\Controller;
 
+use Amp\Http\Client\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Jeux;
 use App\Repository\JeuxRepository;
+use Doctrine\DBAL\Types\IntegerType;
+use Doctrine\DBAL\Types\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 
 class SteamController extends AbstractController
 {
@@ -55,6 +59,26 @@ class SteamController extends AbstractController
         );
     }
 
+    /**
+     * @Route("/steam/new", name="steam_create")
+     */
+    public function create(): Response
+    {
+        $game = new Jeux();
+
+        $form = $this->createFormBuilder($game)
+            ->add('game_name')
+            ->add('game_description')
+            ->add('price')
+            ->getForm();
+
+        return $this->render(
+            'steam/create.html.twig',
+            [
+                'formGame' => $form->createView()
+            ]
+        );
+    }
 
     /**
      * @Route("/steam/{id}", name="steam_game")
