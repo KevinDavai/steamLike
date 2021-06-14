@@ -98,6 +98,9 @@ renderReCaptcha(widgets[i]);
 
 
 						{% if app.user %}
+							<li>
+								<a class="nav-link active" href="{{ path('steam_create') }}">Créer un jeux</a>
+							</li>
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
 								<div class="dropdown-menu">
@@ -106,12 +109,7 @@ renderReCaptcha(widgets[i]);
 									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
 								</div>
 							</li>
-							<li>
-								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
-								<div class="dropdown-menu">
-									<a class="dropdown-item" href="{{ path('steam_create') }}">Créer un jeux</a>
-								</div>
-							</li>
+
 						{% endif %}
 
 						{% if not app.user %}

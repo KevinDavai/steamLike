@@ -9,9 +9,16 @@ use Symfony\Component\Routing\Annotation\Route;
 
 use App\Entity\Jeux;
 use App\Repository\JeuxRepository;
-use Doctrine\DBAL\Types\IntegerType;
-use Doctrine\DBAL\Types\TextType;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\FormBuilderInterface;
+
 
 class SteamController extends AbstractController
 {
@@ -62,7 +69,7 @@ class SteamController extends AbstractController
     /**
      * @Route("/steam/new", name="steam_create")
      */
-    public function create(): Response
+    public function create()
     {
         $game = new Jeux();
 

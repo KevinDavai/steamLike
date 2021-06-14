@@ -3,4 +3,13 @@
 {% block body %}
 	<h1>Creation d'un jeux</h1>
 
-	{{ form(formGame) }}{% endblock %}
+	{{ form_start(formGame) }}
+
+	{{ form_row(formGame.game_name, {'attr': {'placeholder' : "ex : Rocket League"}}) }}
+	{{ form_row(formGame.game_description, {'attr': {'placeholder' : "ex : Jeux de voiture"}}) }}
+	{{ form_row(formGame.price, {'attr': {'placeholder' : "ex : 5€"}}) }}
+
+	<button type="submit" class="btn btn-success">Ajouter le jeu</button>
+
+	{{ form_end(formGame) }}
+{% endblock %}
