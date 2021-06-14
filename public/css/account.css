@@ -100,7 +100,7 @@ body {
 .block-mid {
   background: white;
   width: 55rem;
-  height: 85vh;
+  height: 100vh;
   box-shadow: 3px 3px 10px rgb(0 0 0 / 10%);
   transition: all 0.4s;
 }
@@ -113,3 +113,95 @@ body {
   font-family: BrutalTypeBold;
 }
 
+.form-group {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.form-control-placeholder {
+  position: absolute;
+  top: 0;
+  padding: 7px 0 0 13px;
+  transition: all 200ms;
+  opacity: 0.5;
+}
+
+.form-control:focus + .form-control-placeholder,
+.form-control:valid + .form-control-placeholder {
+  font-size: 75%;
+  transform: translate3d(0, -37%, 0);
+}
+
+.btn-height {
+  height: 40px;
+}
+
+.select.filled {
+  top: 25px;
+  bottom: 10px;
+  left: 15.5px;
+  opacity: 1;
+}
+
+.select:focus ~ .control-label {
+  left: 15.5px;
+  font-size: 0.55em;
+  text-transform: uppercase; }
+
+  .select-div .select {
+    display: block;
+    width: 100%;
+    height: calc(1.5em + 1rem + 2px);
+    padding: .375rem .75rem;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #7b8a8b;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+    transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+}
+
+.select-div .control-label {
+  top: 2px;
+  left: 16px;
+  font-weight: 100;
+  font-size: .55em;
+  text-transform: uppercase;
+  position: absolute;
+  pointer-events: none;
+  -webkit-transition: all .18s ease;
+  -o-transition: .18s ease all;
+  transition: all .18s ease;
+  color: #aeaeae;
+}
+
+.select.disabled {
+  background: none; }
+
+.disablepadding {
+  padding-left: 0;
+}
+
+.disablemarginbottom {
+  margin-bottom: 0;
+}
+
+.cancelbtn {
+  background: #707070;
+  color: #fff;
+  border: 0;
+  margin-right: 20px;
+}
+
+.acceptbtn {
+  background: #0aaff1;
+  margin-right: 20px;
+  border: 0;
+  -webkit-transition: background-color .3s ease-in-out;
+  -o-transition: background-color .3s ease-in-out;
+  transition: background-color .3s ease-in-out;
+  color: #fff;
+}

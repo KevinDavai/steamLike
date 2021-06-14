@@ -5,9 +5,12 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditPseudoType;
 use App\Form\EditProfileType;
+use App\Security\EmailVerifier;
 use App\Form\EditEmailProfileType;
-use App\Repository\UserRepository;
 
+use App\Repository\UserRepository;
+use Symfony\Component\Mime\Address;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,6 +20,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserController extends AbstractController
 {
+  private $emailVerifier;
+
+  public function __construct(EmailVerifier $emailVerifier)
+  {
+      $this->emailVerifier = $emailVerifier;
+  }
 
   #[Route('/account/general', name: 'account_general')]
   public function index(Request $request): Response
@@ -67,6 +76,7 @@ class UserController extends AbstractController
     }
 
     if ($formName->isSubmitted() && $formName->isValid()) {
+
       $em = $this->getDoctrine()->getManager();
       $em->persist($user);
       $em->flush();
@@ -94,9 +104,18 @@ class UserController extends AbstractController
     }
 
     if ($FormEmail->isSubmitted() && $FormEmail->isValid()) {
+      $user->setIsVerified(false);
       $em = $this->getDoctrine()->getManager();
       $em->persist($user);
       $em->flush();
+
+      $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+      (new TemplatedEmail())
+          ->from(new Address('claragmtt@gmail.com', 'Acme Mail Bot'))
+          ->to($user->getEmail())
+          ->subject('Please Confirm your Email')
+          ->htmlTemplate('security/confirmation_email.html.twig')
+  );
 
       return $this->redirect('/account/general');
     }
