@@ -89,11 +89,11 @@ renderReCaptcha(widgets[i]);
 					<ul class="navbar-nav me-auto">
 
 						<li class="nav-item">
-							<a class="nav-link active" href="/steam/store">Magasin</a>
+							<a class="nav-link active" href="{{ path('steam_store') }}">Magasin</a>
 						</li>
 
 						<li class="nav-item">
-							<a class="nav-link active" href="/steam/library">Bibliothèque</a>
+							<a class="nav-link active" href="{{ path('steam_library') }}">Bibliothèque</a>
 						</li>
 
 
@@ -101,21 +101,26 @@ renderReCaptcha(widgets[i]);
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="/account/general">Compte</a>
+									<a class="dropdown-item" href="{{ path('account_general') }}">Compte</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="/logout">Déconnexion</a>
+									<a class="dropdown-item" href="{{ path('app_logout') }}">Déconnexion</a>
 								</div>
 							</li>
-
-
+							<li>
+								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ app.user.username }}</a>
+								<div class="dropdown-menu">
+									<a class="dropdown-item" href="{{ path('steam_create') }}">Créer un jeux</a>
+								</div>
+							</li>
 						{% endif %}
+
 						{% if not app.user %}
 							<li class="nav-item dropdown">
 								<a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Compte</a>
 								<div class="dropdown-menu">
-									<a class="dropdown-item" href="/connexion">Connexion</a>
+									<a class="dropdown-item" href="{{ path('app_login') }}">Connexion</a>
 									<div class="dropdown-divider"></div>
-									<a class="dropdown-item" href="/inscription">Inscription</a>
+									<a class="dropdown-item" href="{{ path('security_registration') }}">Inscription</a>
 								</div>
 							</li>
 						{% endif %}

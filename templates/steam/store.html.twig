@@ -2,22 +2,21 @@
 
 {% block body %}
 
-	<h1>Bienvenue dans Magasin de StimLike</h1>
+	<h1>Magasin de StimLike</h1>
 
-	<p>
-		Excepteur qui amet nisi elit officia. Mollit aliquip consequat ipsum sit ea proident adipisicing cupidatat et sit est nostrud. Sint ex anim esse do tempor. 
-								Qui labore laboris aute occaecat commodo. Consequat ea velit incididunt sint id sunt.
-								Excepteur qui amet nisi elit officia. Mollit aliquip consequat ipsum sit ea proident adipisicing cupidatat et sit est nostrud. Sint ex anim esse do tempor. 
-								Qui labore laboris aute occaecat commodo. Consequat ea velit incididunt sint id sunt.
-								Excepteur qui amet nisi elit officia. Mollit aliquip consequat ipsum sit ea proident adipisicing cupidatat et sit est nostrud. Sint ex anim esse do tempor. 
-								Qui labore laboris aute occaecat commodo. Consequat ea velit incididunt sint id sunt.
-	</p>
-	<p>
-		Excepteur qui amet nisi elit officia. Mollit aliquip consequat ipsum sit ea proident adipisicing cupidatat et sit est nostrud. Sint ex anim esse do tempor. 
-								Qui labore laboris aute occaecat commodo. Consequat ea velit incididunt sint id sunt.
-								Excepteur qui amet nisi elit officia. Mollit aliquip consequat ipsum sit ea proident adipisicing cupidatat et sit est nostrud. Sint ex anim esse do tempor. 
-								Qui labore laboris aute occaecat commodo. Consequat ea velit incididunt sint id sunt.
-								Excepteur qui amet nisi elit officia. Mollit aliquip consequat ipsum sit ea proident adipisicing cupidatat et sit est nostrud. Sint ex anim esse do tempor. 
-								Qui labore laboris aute occaecat commodo. Consequat ea velit incididunt sint id sunt.
-	</p>
+	<section class="game">
+		{% for game in game %}
+			<article>
+				<h2>{{ game.getGameName }}</h2>
+				<div class="metadata">Ecrit par
+					{{ game.getGameCreator}}
+					le 10/05/2018 dans la catégorie Politique</div>
+				<div class="content">
+					{{ game.getGameDescription | raw }}
+				</div>
+				<a href=" {{ path('steam_game', {'id': game.id}) }} " class="btn btn-primary">Lire la suite</a>
+			</article>
+		{% endfor %}
+	</section>
+
 {% endblock %}
