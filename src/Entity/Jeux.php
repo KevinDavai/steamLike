@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\JeuxRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=JeuxRepository::class)
@@ -19,11 +20,13 @@ class Jeux
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=3, max=255, minMessage="Votre titre est trop court", maxMessage="Votre titre est trop long")
      */
     private $game_name;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(min=10, minMessage="Votre description est trop courte")
      */
     private $game_description;
 
@@ -34,6 +37,7 @@ class Jeux
 
     /**
      * @ORM\Column(type="integer")
+     * @Assert\PositiveOrZero
      */
     private $price;
 

@@ -1,15 +1,29 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-	<h1>Creation d'un jeux</h1>
+	<h1>
+		{% if editMode %}
+			Modification d'un jeux
+		{% else %}
+			Création d'un jeux
+		{% endif %}
+	</h1>
 
 	{{ form_start(formGame) }}
 
 	{{ form_row(formGame.game_name, {'attr': {'placeholder' : "ex : Rocket League"}}) }}
+
 	{{ form_row(formGame.game_description, {'attr': {'placeholder' : "ex : Jeux de voiture"}}) }}
+
 	{{ form_row(formGame.price, {'attr': {'placeholder' : "ex : 5€"}}) }}
 
-	<button type="submit" class="btn btn-success">Ajouter le jeu</button>
+	<button type="submit" class="btn btn-success">
+		{% if editMode %}
+			Enregister les modifications
+		{% else %}
+			Ajouter le jeu
+		{% endif %}
+	</button>
 
 	{{ form_end(formGame) }}
 {% endblock %}
