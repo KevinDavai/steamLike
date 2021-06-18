@@ -7,6 +7,8 @@ use App\Form\EditPseudoType;
 use App\Form\EditProfileType;
 use App\Security\EmailVerifier;
 use App\Form\EditEmailProfileType;
+use App\Form\EditFirstNameType;
+
 
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
@@ -115,7 +117,36 @@ class UserController extends AbstractController
           ->to($user->getEmail())
           ->subject('Please Confirm your Email')
           ->htmlTemplate('security/confirmation_email.html.twig')
-  );
+      );
+
+      return $this->redirect('/account/general');
+    }
+
+    $formPrenom = $this->createForm(EditFirstNameType::class, $user);
+
+    $formPrenom->handleRequest($request);
+
+    if ($formPrenom->isSubmitted() && !$formPrenom->isValid()) {
+      $response = new Response(json_encode(array(
+        'status' => 'error',
+        'errors' => $this->getErrorMessages($formPrenom)
+      )));
+
+      $response->headers->set('Content-Type', 'application/json');
+
+      $firstName = $this->getUser()->getFirstname();
+      $nameReal = $this->getUser()->getName();
+
+      $user->setFirstname($firstName);
+      $user->setName($nameReal);
+
+      return $response;
+    }
+
+    if ($formPrenom->isSubmitted() && $formPrenom->isValid()) {
+      $em = $this->getDoctrine()->getManager();
+      $em->persist($user);
+      $em->flush();
 
       return $this->redirect('/account/general');
     }
@@ -140,6 +171,7 @@ class UserController extends AbstractController
           'user' => $user,
           'formEmail' => $FormEmail->createView(),
           'form' => $formName->createView(),
+          'formPrenom' => $formPrenom->createView(),
         ])->getContent();
 
         $response = new Response(json_encode(array(
@@ -147,6 +179,7 @@ class UserController extends AbstractController
           'template' => $template,
           'formEmail' => $FormEmail,
           'form' => $formName,
+          'formPrenom' => $formPrenom,
           'user' => $user,
         )));
 
