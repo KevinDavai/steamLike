@@ -23,7 +23,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 use App\Form\GameType;
-
+use DateTime;
 
 class SteamController extends AbstractController
 {
@@ -89,6 +89,10 @@ class SteamController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$game->getId()) {
                 $game->setGameCreator("Test");
+            }
+
+            if (!$game->getDate()) {
+                $game->setDate(date("d-m-Y"));
             }
 
             $manager->persist($game);

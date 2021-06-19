@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\JeuxRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @ORM\Entity(repositoryClass=JeuxRepository::class)
@@ -40,6 +41,11 @@ class Jeux
      * @Assert\PositiveOrZero
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $date_sortie;
 
     public function getId(): ?int
     {
@@ -90,6 +96,18 @@ class Jeux
     public function setPrice(int $price): self
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getDate(): ?string
+    {
+        return $this->date_sortie;
+    }
+
+    public function setDate(string $date_sortie): self
+    {
+        $this->date_sortie = $date_sortie;
 
         return $this;
     }
