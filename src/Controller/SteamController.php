@@ -78,6 +78,8 @@ class SteamController extends AbstractController
     public function form(Jeux $game = null, Request $request, EntityManagerInterface $manager)
     {
 
+        $user = $this->getUser();
+
         if (!$game) {
             $game = new Jeux();
         }
@@ -88,7 +90,7 @@ class SteamController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             if (!$game->getId()) {
-                $game->setGameCreator("Test");
+                $game->setGameCreator($user->getUsername());
             }
 
             if (!$game->getDate()) {

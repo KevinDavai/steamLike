@@ -71,8 +71,7 @@ class User implements UserInterface, EquatableInterface
      * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Votre prénom ne peux pas contenir de charactères speciaux")
      */
     private $firstname;
-
-
+    
     public function getCaptcha()
     {
       return $this->captcha;

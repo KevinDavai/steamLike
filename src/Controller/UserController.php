@@ -5,19 +5,22 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\EditPseudoType;
 use App\Form\EditProfileType;
-use App\Security\EmailVerifier;
-use App\Form\EditEmailProfileType;
+use App\Form\EditPasswordType;
 use App\Form\EditFirstNameType;
+use App\Security\EmailVerifier;
 
 
+use App\Form\EditEmailProfileType;
 use App\Repository\UserRepository;
 use Symfony\Component\Mime\Address;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 
 class UserController extends AbstractController
@@ -56,7 +59,7 @@ class UserController extends AbstractController
   /**
    * @Route("/ajax/redirect", name="ajax_redirect")
    */
-  public function ajax_noReloadUrl(Request $request)
+  public function ajax_noReloadUrl(Request $request, UserPasswordEncoderInterface $encoder, EntityManagerInterface $manager)
   {
     $user = $this->getUser();
     $name = $this->getUser()->getUsername();
@@ -151,16 +154,49 @@ class UserController extends AbstractController
       return $this->redirect('/account/general');
     }
 
+    $formPassword = $this->createForm(EditPasswordType::class, $user);
+    $formPassword->handleRequest($request);
+
+    if ($formPassword->isSubmitted() && !$formPassword->isValid()) {
+      $response = new Response(json_encode(array(
+        'status' => 'error',
+        'errors' => $this->getErrorMessages($formPassword)
+      )));
+
+      $response->headers->set('Content-Type', 'application/json');
+
+      $pw = $this->getUser()->getPassword();
+      $user->setPassword($pw);
+
+      return $response;
+    }
+
+    if ($formPassword->isSubmitted() && $formPassword->isValid()) {
+      $hash = $encoder->encodePassword($user, $user->getPassword());
+
+      $user->setPassword($hash);
+
+      $manager->persist($user);
+      $manager->flush();
+
+      return $this->redirect('/account/password');
+    }
+
     if (isset($_GET['call_type'])) {
       $call_type = $request->query->get('call_type');
 
       if ($call_type == "/account/password") {
 
-        $template = $this->render('/user/password.html.twig')->getContent();
+        $template = $this->render('/user/password.html.twig', [
+          'user' => $user,
+          'formPassword' => $formPassword->createView(),
+        ])->getContent();
 
         $response = new Response(json_encode(array(
           'status' => 'success',
           'template' => $template,
+          'formPassword' => $formPassword,
+          'user' => $user,
         )));
 
         $response->headers->set('Content-Type', 'application/json');

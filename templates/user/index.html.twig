@@ -208,11 +208,40 @@
                 .done(function(response) {
                     console.log(response.errors);
                     if(!response.errors){
-                        $(document).find('.errorrr').html('<div class="alert alert-success">Votre pseudo a été mis à jour !</div>');
+                        $(document).find('.errorrr').html('<div class="alert alert-success">Vos information on été mis à jour !</div>');
                         window.location.reload();
                     }
                     else {
 					    $(document).find('.errorrr').html('<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Error</span> <span class="form-error-message">' + response.errors.username[0] + '</span></span></span>');
+                    }
+                })
+            });
+
+                        $(document).on('click','#formPassword', function(e){
+                console.log("click");
+        
+                    var data = $('#form_password_edit').serializeArray(); // convert form to array
+                                     var token =  $('input[name="edit_password[_token]"]').attr('value')
+
+                    data.push({name: "edit_password[_token]", value: token});
+                    data.push({name: "_csrf_token", value: token});
+
+                console.log($('#form_password_edit').serialize());
+ 
+               $.ajax({
+                    method: "POST", // défini le type d'envoi de données, post ou get
+
+                    url : "{{path('ajax_redirect') }}",  // l'url de réception des données
+                    data : data, // tes données sérialisé de ton formule que tu envoies au controller
+                })
+                .done(function(response) {
+                    console.log(response.errors);
+                    if(!response.errors){
+                        $(document).find('.errorrr').html('<div class="alert alert-success">Votre mot de passe a été mis à jour !</div>');
+                        window.location.reload();
+                    }
+                    else {
+					    $(document).find('.errorrr').html('<span class="invalid-feedback d-block"><span class="d-block"><span class="form-error-icon badge badge-danger text-uppercase">Error</span> <span class="form-error-message">' + response.errors.password.first[0] + '</span></span></span>');
                     }
                 })
             });
