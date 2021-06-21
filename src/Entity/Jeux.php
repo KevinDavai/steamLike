@@ -50,7 +50,23 @@ class Jeux
     /**
      * @ORM\Column(type="string")
      */
-    private $categorie;
+    private $image;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $background;
+
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $downloadUrl;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="Jeux")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $category;
 
     public function getId(): ?int
     {
@@ -60,6 +76,39 @@ class Jeux
     public function getGameName(): ?string
     {
         return $this->game_name;
+    }
+
+    public function getImage(): ?string
+    {
+        return $this->image;
+    }
+
+    public function setImage(string $img): ?self
+    {
+        $this->image = $img;
+        return $this;
+    }
+
+    public function getDownloadUrl(): ?string
+    {
+        return $this->downloadUrl;
+    }
+
+    public function setDownloadUrl(string $url): ?self
+    {
+        $this->downloadUrl = $url;
+        return $this;
+    }
+
+    public function getBackground(): ?string
+    {
+        return $this->background;
+    }
+
+    public function setBackground(string $bckg): ?self
+    {
+        $this->background = $bckg;
+        return $this;
     }
 
     public function setGameName(string $game_name): self
@@ -117,14 +166,14 @@ class Jeux
         return $this;
     }
 
-    public function getCategorie(): ?string
+    public function getCategory(): ?Category
     {
-        return $this->categorie;
+        return $this->category;
     }
 
-    public function setCategorie(string $categorie): self
+    public function setCategory(?Category $category): self
     {
-        $this->categorie = $categorie;
+        $this->category = $category;
 
         return $this;
     }

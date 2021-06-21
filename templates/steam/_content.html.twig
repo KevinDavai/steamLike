@@ -1,0 +1,21 @@
+{% block body %}
+<div class="products-trending">
+    {% set id = 1 %}
+    {% for gameToDisplay in gameToDisplay %}
+        <div class="item" id="ig-preorders-item-{{id}}">
+            <a class="cover" href="{{ path('steam_game', {'id': gameToDisplay.id}) }}" title="{{ gameToDisplay.getGameName }}">
+                <div class="badge steam"></div>
+                <img class="picture mainshadow" data-src="{{ gameToDisplay.getImage }}" src="{{ gameToDisplay.getImage }}" alt="{{ gameToDisplay.getGameName }}" title="{{ gameToDisplay.getGameName }}">
+                <div class="shadow">
+                    <div class="discount">-45%</div>
+                    <div class="price">{{ gameToDisplay.getPrice }}€</div>
+                </div>
+            </a>
+            <div class="name">{{ gameToDisplay.getGameName }}</div>
+            </div>      
+        {% set id = id + 1 %}
+    {% endfor %}
+</div>
+</div>
+
+{% endblock %}

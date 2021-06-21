@@ -2,28 +2,30 @@
 
 namespace App\Controller;
 
+use DateTime;
+use App\Entity\Jeux;
+use App\Form\GameType;
+use App\Repository\JeuxRepository;
+
+use App\Repository\CategoryRepository;
+use Doctrine\Persistence\ObjectManager;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\AbstractType;
+use phpDocumentor\Reflection\Types\Integer;
+
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-
-use App\Entity\Jeux;
-use App\Repository\JeuxRepository;
-use Doctrine\Persistence\ObjectManager;
-use phpDocumentor\Reflection\Types\Integer;
-use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-
-use Doctrine\ORM\EntityManagerInterface;
-
-use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
+
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\FormBuilderInterface;
-
-use App\Form\GameType;
-use DateTime;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SteamController extends AbstractController
 {
@@ -44,16 +46,27 @@ class SteamController extends AbstractController
     /**
      * @Route("/steam/store", name="steam_store")
      */
-    public function store(JeuxRepository $repo): Response
+    public function store(JeuxRepository $repo, CategoryRepository $repoCat, Request $request): Response
     {
         $games = $repo->findAll();
+        $category = $repoCat->findAll();
 
-        return $this->render(
-            'steam/store.html.twig',
-            [
-                'game' => $games
-            ]
-        );
+        $filters = $request->get('category');
+
+        $gameToDisplay = $repo->findByCategory($filters);
+
+        if(empty($filters)) {
+            $gameToDisplay = $repo->findAll();
+        }
+
+        if($request->get('ajax')){
+            return new JsonResponse([
+                'content' => $this->renderView('steam/_content.html.twig', compact('gameToDisplay', 
+                'games'))
+            ]);
+        }
+
+        return $this->render('steam/store.html.twig', compact('gameToDisplay', 'games', 'category'));
     }
 
     /**
