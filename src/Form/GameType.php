@@ -14,7 +14,8 @@ class GameType extends AbstractType
         $builder
             ->add('game_name')
             ->add('game_description')
-            ->add('price');
+            ->add('price')
+            ->add('categorie');
     }
 
     public function configureOptions(OptionsResolver $resolver)

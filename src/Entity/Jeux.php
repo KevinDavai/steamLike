@@ -47,6 +47,11 @@ class Jeux
      */
     private $date_sortie;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $categorie;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -108,6 +113,18 @@ class Jeux
     public function setDate(string $date_sortie): self
     {
         $this->date_sortie = $date_sortie;
+
+        return $this;
+    }
+
+    public function getCategorie(): ?string
+    {
+        return $this->categorie;
+    }
+
+    public function setCategorie(string $categorie): self
+    {
+        $this->categorie = $categorie;
 
         return $this;
     }

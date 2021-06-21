@@ -8,12 +8,17 @@
 			{{ game.getGameCreator}}
 			le
 			{{ game.getDate }}
-			dans la catégorie Politique</div>
+			dans la catégorie
+			{{ game.getCategorie }}</div>
 		<div class="content">
 			<img src="http://placehold.it/350*150" alt="">
 			<hr>
 			{{ game.getGameDescription | raw }}
 		</div>
+		{{comment.getCommentContent | raw}}
+		<hr>
+		<div class="comment"></div>
+
 	</article>
 
 {% endblock %}
