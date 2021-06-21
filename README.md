@@ -22,13 +22,11 @@
 [![MIT License][license-shield]][license-url]
 [![LinkedIn][linkedin-shield]][linkedin-url]
 
-
-
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
   <a href="https://github.com/Nours86/steamLike">
-    <img src="https://avatars.githubusercontent.com/u/59893208?v=4" alt="Logo" width="80" height="80">
+    <img src="https://avatars.githubusercontent.com/u/59893208?v=4" alt="Logo" width="80" height="250">
   </a>
 
   <h3 align="center">Steam Project Symfony</h3>
