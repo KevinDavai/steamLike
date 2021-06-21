@@ -27,14 +27,14 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/othneildrew/Best-README-Template">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  <a href="https://github.com/Nours86/steamLike">
+    <img src="https://avatars.githubusercontent.com/u/59893208?v=4" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">Best-README-Template</h3>
+  <h3 align="center">Steam Project Symfony</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
+   An awesome work of group to learn symfony
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
