@@ -17,6 +17,32 @@
 
 	{{ form_row(formGame.price, {'attr': {'placeholder' : "ex : 5€"}}) }}
 
+	{{ form_row(formGame.categorie, {'attr': {'placeholder' : "ex : RPG"}}) }}
+
+	<div class="select-div col-md-6 col-xs-12 preferred-lang-field disablepadding pb-4">
+		<select name="preferredLanguage" class="select filled">
+			<option value="" disabled="">Langue de communication préférée *</option>
+			<option value="en">English</option>
+			<option value="ko">한국어[Coréen]</option>
+			<option value="ja">日本語[Japonais]</option>
+			<option value="zh">简体中文[Chinois simplifié]</option>
+			<option value="de">Deutsch [Allemand]</option>
+			<option value="fr">Français [Français]</option>
+			<option value="es-mx">Español (México) [Espagnol]</option>
+			<option value="ru">Русский [Russe]</option>
+			<option value="es-ES">Español (España) [Espagnol]</option>
+			<option value="it">Italiano</option>
+			<option value="pl">Polski</option>
+			<option value="pt-BR">Português (Brésil)</option>
+			<option value="ar">العربية</option>
+			<option value="tr">Türkçe
+			</option>
+			<option value="th">ไทย</option>
+			<option value="zh-Hant">繁體中文</option>
+		</select>
+		<div for="preferredLanguage" class="control-label">Langue de communication préférée *</div>
+	</div>
+
 	<button type="submit" class="btn btn-success">
 		{% if editMode %}
 			Enregister les modifications

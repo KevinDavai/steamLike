@@ -92,10 +92,11 @@ renderReCaptcha(widgets[i]);
 							<a class="nav-link active" href="{{ path('steam_store') }}">Magasin</a>
 						</li>
 
-						<li class="nav-item">
-							<a class="nav-link active" href="{{ path('steam_library') }}">Bibliothèque</a>
-						</li>
-
+						{#
+												<li class="nav-item">
+													<a class="nav-link active" href="{{ path('steam_library') }}">Bibliothèque</a>
+												</li>
+												#}
 
 						{% if app.user %}
 							<li>
