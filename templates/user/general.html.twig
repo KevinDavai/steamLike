@@ -1,4 +1,10 @@
 <div class="px-5 pt-4">
+{% if user.isVerified == false %}
+<div class="alert alert-dismissible alert-warning">
+  <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  <p class="mb-0">Veuillez verifier votre adresse email, en cliquant sur le lien qui vous a été envoyé</a>.</p>
+</div>
+{% endif %}
   <blockquote class="blockquote">
     <p class="mb-0 pb-3 h4"><strong>PARAMÈTRES GÉNÉRAUX</strong></p>
     <footer class="blockquote-footer">Gérez les informations de compte que vous avez partagées avec StimLike, dont votre nom, vos informations de contact et plus</footer>
@@ -36,7 +42,7 @@
             {{ form_widget(formPrenom.name, {'attr': {'class': 'form-control form-control-lg'}}) }}
             {{ form_label(formPrenom.name, 'Prénom', {'label_attr': {'class': 'form-control-placeholder'}}) }}
         </div>
-              </div>
+      </div>
     </div>
     <div class="col">
       <div class="form-group">

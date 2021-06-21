@@ -38,7 +38,7 @@ class SteamController extends AbstractController
     #[Route('/', name: 'home')]
     public function home(): Response
     {
-        return $this->render('steam/home.html.twig');
+        return $this->redirectToRoute('steam_store');
     }
 
     /**

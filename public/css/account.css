@@ -205,3 +205,47 @@ body {
   transition: background-color .3s ease-in-out;
   color: #fff;
 }
+
+.vertical { 
+  border-left: 4px solid black; 
+  height: 200px; 
+  display: inline-block;
+  } 
+
+.bottom-nav-item {
+  padding-top: 30em;
+}
+
+.css-1xe22b2-BrowseGrid-styles__cardsContainer {
+  margin: 0px;
+  padding: 0px;
+  list-style-type: none;
+  align-content: stretch;
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+.css-1lozana {
+  position: relative;
+  padding-bottom: calc(4 / 3 * 100%);
+  background: linear-gradient(to bottom,rgb(43,43,43),rgb(32,32,32));
+  color: rgba(245,245,245,0.6);
+  overflow: hidden;
+  border-radius: 4px;
+}
+
+.css-1rsvhjy-Picture-styles__image-OfferCardImageArt__picture-OfferCardImagePortrait__picture-Picture-styles__visible {
+  transition: opacity 125ms ease-in-out 450ms;
+  position: absolute;
+  height: 100%;
+  width: auto;
+  opacity: 1;
+}
+
+img, svg {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
+}
+

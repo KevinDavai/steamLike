@@ -21,6 +21,9 @@ class EditPasswordType extends AbstractType
                 'required' => true,
                 'first_options' => ['label' => 'Mot de passe'],
                 'second_options' => ['label' => 'Répétez votre mot de passe'],
+                'row_attr' => array(
+                    'class' => 'form-control-lg'
+                )
             ])
             ;
     }
