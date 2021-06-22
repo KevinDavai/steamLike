@@ -8,6 +8,7 @@ use App\Form\GameType;
 use App\Repository\JeuxRepository;
 
 use App\Repository\CategoryRepository;
+use App\Repository\CommentRepository;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
@@ -55,14 +56,16 @@ class SteamController extends AbstractController
 
         $gameToDisplay = $repo->findByCategory($filters);
 
-        if(empty($filters)) {
+        if (empty($filters)) {
             $gameToDisplay = $repo->findAll();
         }
 
-        if($request->get('ajax')){
+        if ($request->get('ajax')) {
             return new JsonResponse([
-                'content' => $this->renderView('steam/_content.html.twig', compact('gameToDisplay', 
-                'games'))
+                'content' => $this->renderView('steam/_content.html.twig', compact(
+                    'gameToDisplay',
+                    'games'
+                ))
             ]);
         }
 
@@ -128,12 +131,15 @@ class SteamController extends AbstractController
     /**
      * @Route("/steam/{id}", name="steam_game")
      */
-    public function game(Jeux $game): Response
+    public function game(Jeux $game, CommentRepository $repo): Response
     {
+        $comment = $repo->findAll();
+
         return $this->render(
             'steam/game.html.twig',
             [
-                'game' => $game
+                'game' => $game,
+                'comments' => $comment
             ]
         );
     }

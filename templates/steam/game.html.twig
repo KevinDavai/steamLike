@@ -2,230 +2,295 @@
 
 {% block body %}
 
-<style>
-#backgroundLink {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    left: 0;
-}
+	<style>
+		#backgroundLink {
+			position: absolute;
+			width: 100%;
+			height: 100%;
+			left: 0;
+		}
 
-.ig-mainwrapper.rounded {
-    border-radius: 8px;
-}
-.ig-sections-main-content, .mainshadow {
-    box-shadow: 0 0 8px 0 rgb(0 0 0 / 10%);
-}
-.ig-mainwrapper {
-    box-sizing: border-box;
-    padding: 20px;
-    background: #eee;
-    border-radius: 0 0 8px 8px;
-    position: relative;
-    z-index: 1;
-}
-.ig-wrapper {
-    max-width: 1036px;
-    margin: 0 auto;
-    position: relative;
-}
-#ig-main-container {
-    width: 1036px;
-    margin: 0 auto;
-    background: #eee;
-    position: relative;
-    box-shadow: 0 0 3px rgb(0 0 0 / 39%);
-    border-radius: 10px;
-}
+		.ig-mainwrapper.rounded {
+			border-radius: 8px;
+		}
+		.ig-sections-main-content,
+		.mainshadow {
+			box-shadow: 0 0 8px 0 rgb(0 0 0 / 10%);
+		}
+		.ig-mainwrapper {
+			box-sizing: border-box;
+			padding: 20px;
+			background: #eee;
+			border-radius: 0 0 8px 8px;
+			position: relative;
+			z-index: 1;
+		}
+		.ig-wrapper {
+			max-width: 1036px;
+			margin: 0 auto;
+			position: relative;
+		}
+		#ig-main-container {
+			width: 1036px;
+			margin: 0 auto;
+			background: #eee;
+			position: relative;
+			box-shadow: 0 0 3px rgb(0 0 0 / 39%);
+			border-radius: 10px;
+		}
 
-.product {
-    display: flex;
-    border-radius: 8px;
-}
+		.product {
+			display: flex;
+			border-radius: 8px;
+		}
 
-.product .blur {
-    position: relative;
-    width: 40%;
-    border-radius: 8px;
-    overflow: hidden;
-}
+		.product .blur {
+			position: relative;
+			width: 40%;
+			border-radius: 8px;
+			overflow: hidden;
+		}
 
-.product .blur .background {
-    filter: blur(20px);
-    position: absolute;
-    width: 100%;
-    top: -50%;
-    transform: scale(1.1);
-    display: none;
-}
-img {
-    border: 0;
-}
+		.product .blur .background {
+			filter: blur(20px);
+			position: absolute;
+			width: 100%;
+			top: -50%;
+			transform: scale(1.1);
+			display: none;
+		}
+		img {
+			border: 0;
+		}
 
-.product .cover {
-    display: flex;
-}
-.ig-sections-main-content, .mainshadow {
-    box-shadow: 0 0 8px 0 rgb(0 0 0 / 10%);
-}
+		.product .cover {
+			display: flex;
+		}
+		.ig-sections-main-content,
+		.mainshadow {
+			box-shadow: 0 0 8px 0 rgb(0 0 0 / 10%);
+		}
 
-.product .cover .picture, .product .infos {
-    width: 100%;
-    border-radius: 8px;
-}
+		.product .cover .picture,
+		.product .infos {
+			width: 100%;
+			border-radius: 8px;
+		}
 
-.product .infos {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-between;
-    margin-left: 20px;
-    background: #fff;
-    overflow: hidden;
-}
-.product .cover .picture, .product .infos {
-    width: 100%;
-    border-radius: 8px;
-}
+		.product .infos {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: space-between;
+			margin-left: 20px;
+			background: #fff;
+			overflow: hidden;
+		}
+		.product .cover .picture,
+		.product .infos {
+			width: 100%;
+			border-radius: 8px;
+		}
 
-.product .buy {
-    margin-top: 10px;
-    text-align: center;
-    display: flex;
-    width: calc(100% + 10px);
-    background: #000;
-    padding: 15px;
-}
+		.product .buy {
+			margin-top: 10px;
+			text-align: center;
+			display: flex;
+			width: calc(100% + 10px);
+			background: #000;
+			padding: 15px;
+		}
 
-.product .buy .buybutton.nostock, .product .buy .prices.nostock {
-    opacity: .5;
-}
-.product .buy .prices {
-    text-align: right;
-    white-space: nowrap;
-    margin-right: 25px;
-    margin-left: 10px;
-}
-.ig-sections-main-content, .mainshadow {
-    box-shadow: 0 0 8px 0 rgb(0 0 0 / 10%);
-}
+		.product .buy .buybutton.nostock,
+		.product .buy .prices.nostock {
+			opacity: .5;
+		}
+		.product .buy .prices {
+			text-align: right;
+			white-space: nowrap;
+			margin-right: 25px;
+			margin-left: 10px;
+		}
+		.ig-sections-main-content,
+		.mainshadow {
+			box-shadow: 0 0 8px 0 rgb(0 0 0 / 10%);
+		}
 
-.product .buy .prices .price {
-    font-size: 39px;
-    line-height: 34px;
-    margin-left: 5px;
-    margin-top: 0;
-    color: #fff;
-}
-.product .buy .prices .discount, .product .buy .prices .price {
-    display: inline-block;
-    position: relative;
-    top: 3px;
-    font-weight: 700;
-}
+		.product .buy .prices .price {
+			font-size: 39px;
+			line-height: 34px;
+			margin-left: 5px;
+			margin-top: 0;
+			color: #fff;
+		}
+		.product .buy .prices .discount,
+		.product .buy .prices .price {
+			display: inline-block;
+			position: relative;
+			top: 3px;
+			font-weight: 700;
+		}
 
-.product .buy .swap {
-    display: flex;
-    width: 100%;
-}
+		.product .buy .swap {
+			display: flex;
+			width: 100%;
+		}
 
-.product .buy .button.addwishlist {
-    background-color: rgba(255,84,0,.30980392156862746);
-    background-image: url(/themes/igv1/modules/product/images/heart.svg);
-    background-repeat: no-repeat;
-    background-position: 50%;
-    background-size: 19px;
-    width: 60px;
-    margin-right: 15px;
-    flex-shrink: 0;
-}
-.product .buy .button {
-    font-size: 19px;
-    padding: 19px 0;
-    width: 100%;
-}
-.button {
-    background: #ff5400;
-    color: #fff;
-    border-radius: 5px;
-    padding: 7px 20px;
-    font-weight: 700;
-    display: inline-block;
-    border: 0;
-    cursor: pointer;
-}
+		.product .buy .button.addwishlist {
+			background-color: rgba(255, 84, 0, 0.30980392156862746);
+			background-image: url('/themes/igv1/modules/product/images/heart.svg');
+			background-repeat: no-repeat;
+			background-position: 50%;
+			background-size: 19px;
+			width: 60px;
+			margin-right: 15px;
+			flex-shrink: 0;
+		}
+		.product .buy .button {
+			font-size: 19px;
+			padding: 19px 0;
+			width: 100%;
+		}
+		.button {
+			background: #ff5400;
+			color: #fff;
+			border-radius: 5px;
+			padding: 7px 20px;
+			font-weight: 700;
+			display: inline-block;
+			border: 0;
+			cursor: pointer;
+		}
 
-.information {
-    margin-top: 40px;
-}
+		.information {
+			margin-top: 40px;
+		}
 
-.information .info .hardspecs {
-    padding: 0 20px;
-}
+		.information .info .hardspecs {
+			padding: 0 20px;
+		}
 
-.information .info .hardspecs.steam .container {
-    padding: 10px 0;
-}
+		.information .info .hardspecs.steam .container {
+			padding: 10px 0;
+		}
 
-.information .info .hardspecs .asterix {
-    color: #a7a7a7;
-    padding: 8px 0 25px;
-}
-.information .info .hardspecs.steam .content li {
-    list-style-type: none;
-    min-height: 20px;
-    position: relative;
-    margin-left: 100px;
-    line-height: 20px;
-}
+		.information .info .hardspecs .asterix {
+			color: #a7a7a7;
+			padding: 8px 0 25px;
+		}
+		.information .info .hardspecs.steam .content li {
+			list-style-type: none;
+			min-height: 20px;
+			position: relative;
+			margin-left: 100px;
+			line-height: 20px;
+		}
 
-.information .info .hardspecs h2, .information .info .release h2, .information .info .team h2 {
-    font-size: 13px;
-    font-weight: 400;
-    margin-bottom: 0;
-    margin-right: 10px;
-}
-.information .info .hardspecs .asterix {
-    color: #a7a7a7;
-    padding: 8px 0 25px;
-}
-</style>
+		.information .info .hardspecs h2,
+		.information .info .release h2,
+		.information .info .team h2 {
+			font-size: 13px;
+			font-weight: 400;
+			margin-bottom: 0;
+			margin-right: 10px;
+		}
+		.information .info .hardspecs .asterix {
+			color: #a7a7a7;
+			padding: 8px 0 25px;
+		}
+	</style>
 
-<div id="backgroundLink" title="Rocket League" style="background: linear-gradient(to bottom, #09150b 0px, transparent 150px), url({{game.background}}) center 0px no-repeat  #09150b;">
-	<div id="ig-main-container">
-		<div class="ig-wrapper ig-mainwrapper mainshadow  rounded">
-			<div class="product">
-				<div class="blur">
-					<img class="background" src="{{game.background}}" alt="{{ game.getGameName }}" title="{{ game.getGameName }}">
-					<div class="cover mainshadow">
-						<img class="picture" data-src="{{game.image}}" src="{{game.image}}" alt="{{ game.getGameName }}" title="{{ game.getGameName }}">
+	<div id="backgroundLink" title="Rocket League" style="background: linear-gradient(to bottom, #09150b 0px, transparent 150px), url({{game.background}}) center 0px no-repeat  #09150b;">
+		<div id="ig-main-container">
+			<div class="ig-wrapper ig-mainwrapper mainshadow  rounded">
+				<div class="product">
+					<div class="blur">
+						<img class="background" src="{{game.background}}" alt="{{ game.getGameName }}" title="{{ game.getGameName }}">
+						<div class="cover mainshadow">
+							<img class="picture" data-src="{{game.image}}" src="{{game.image}}" alt="{{ game.getGameName }}" title="{{ game.getGameName }}">
+						</div>
 					</div>
-				</div>
-				<div class="infos mainshadow">
-					<h1>{{ game.getGameName }}</h1>
-					<a class="btn btn-success" href="{{ game.getDownloadUrl }}">DOWNLOAD</a>
-					<div class="buy">
-						<div class="prices nostock">
-							<div class="price">{{game.price}}€</div>
+					<div class="infos mainshadow">
+						<h1>{{ game.getGameName }}</h1>
+						<a class="btn btn-success" href="{{ game.getDownloadUrl }}">DOWNLOAD</a>
+						{% if app.user.getUsername == game.getGamecreator %}
+							<a class="btn btn-success" href="{{ game.getDownloadUrl }}">EDIT</a>
+						{% endif %}
+						<div class="buy">
+							<div class="prices nostock">
+								<div class="price">{{game.price}}€</div>
+							</div>
 						</div>
 					</div>
 				</div>
-			</div>
-			<div class="information">
-			<div class="hardspecs steam">
-				<div class="container">
-				<h2>Configuration minimale*</h2>
-				<div class="content"><li><strong>OS:</strong> Windows 7 or Newer</li><li><strong>Processor:</strong> 2.4 GHz Dual core</li><li><strong>Memory:</strong> 2 GB RAM</li><li><strong>Graphics:</strong> NVIDIA GTX 260 or ATI 4850</li><li><strong>DirectX:</strong> Version 9.0c</li><li><strong>Network:</strong> Broadband Internet connection</li><li><strong>Storage:</strong> 7 GB available space</li></div>
+				<div class="information">
+					<div class="hardspecs steam">
+						<div class="container">
+							<h2>Configuration minimale*</h2>
+							<div class="content">
+								<li>
+									<strong>OS:</strong>
+									Windows 7 or Newer</li>
+								<li>
+									<strong>Processor:</strong>
+									2.4 GHz Dual core</li>
+								<li>
+									<strong>Memory:</strong>
+									2 GB RAM</li>
+								<li>
+									<strong>Graphics:</strong>
+									NVIDIA GTX 260 or ATI 4850</li>
+								<li>
+									<strong>DirectX:</strong>
+									Version 9.0c</li>
+								<li>
+									<strong>Network:</strong>
+									Broadband Internet connection</li>
+								<li>
+									<strong>Storage:</strong>
+									7 GB available space</li>
+							</div>
+						</div>
+						<div class="container">
+							<h2>Configuration recommandée*</h2>
+							<div class="content">
+								<li>
+									<strong>OS:</strong>
+									Windows 7 or Newer</li>
+								<li>
+									<strong>Processor:</strong>
+									2.5+ GHz Quad core</li>
+								<li>
+									<strong>Memory:</strong>
+									4 GB RAM</li>
+								<li>
+									<strong>Graphics:</strong>
+									NVIDIA GTX 660 or better, ATI 7950 or better</li>
+								<li>
+									<strong>DirectX:</strong>
+									Version 9.0c</li>
+								<li>
+									<strong>Network:</strong>
+									Broadband Internet connection</li>
+								<li>
+									<strong>Storage:</strong>
+									7 GB available space</li>
+							</div>
+						</div>
+						<div class="asterix center">*Les tags et configurations sont à titre informatif</div>
+					</div>
 				</div>
-				<div class="container">
-				<h2>Configuration recommandée*</h2>
-				<div class="content"><li><strong>OS:</strong> Windows 7 or Newer</li><li><strong>Processor:</strong> 2.5+ GHz Quad core</li><li><strong>Memory:</strong> 4 GB RAM</li><li><strong>Graphics:</strong> NVIDIA GTX 660 or better, ATI 7950 or better</li><li><strong>DirectX:</strong> Version 9.0c</li><li><strong>Network:</strong> Broadband Internet connection</li><li><strong>Storage:</strong> 7 GB available space</li></div>
-				</div>
-				<div class="asterix center">*Les tags et configurations sont à titre informatif</div>
+				<div class="comment">
+					<h2>Commentaire(s)</h2>
+					{% for comment in comments %}
+						<p>Oui</p>
+					{% else %}
+						<p>Pas de commentaires pour ce jeux. Soyez le premier à donner votre avis...</p>
+					{% endfor %}
+
 				</div>
 			</div>
 		</div>
 	</div>
-</div>
 
 {% endblock %}

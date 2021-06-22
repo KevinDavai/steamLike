@@ -27,6 +27,11 @@ class Comment
      */
     private $comment_date_post;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $comment_author;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -52,6 +57,18 @@ class Comment
     public function setCommentDatePost(string $comment_date_post): self
     {
         $this->comment_date_post = $comment_date_post;
+
+        return $this;
+    }
+
+    public function getCommentAuthor(): ?string
+    {
+        return $this->comment_author;
+    }
+
+    public function setCommentAuthor(string $comment_author): self
+    {
+        $this->comment_author = $comment_author;
 
         return $this;
     }
