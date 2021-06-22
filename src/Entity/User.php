@@ -25,6 +25,12 @@ class User implements UserInterface, EquatableInterface
     private $id;
 
     /**
+     * @ORM\ManyToMany(targetEntity="Group", inversedBy="User")
+     *
+     */
+    private $groups;
+
+    /**
      * @ORM\Column(type="string", length=255)
      * @Assert\Email()
      */
@@ -71,7 +77,17 @@ class User implements UserInterface, EquatableInterface
      * @Assert\Regex(pattern="/^[a-zA-Z0-9 ]+$/", match=true, message="Votre prénom ne peux pas contenir de charactères speciaux")
      */
     private $firstname;
+
+    public function __construct()
+    {
+        $this->groups = new ArrayCollection();
+    }
     
+    public function getRolesUser()
+    {
+        return $this->groups->toArray();
+    }
+
     public function getCaptcha()
     {
       return $this->captcha;
