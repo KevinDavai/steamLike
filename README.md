@@ -99,7 +99,7 @@ Distributed under the MIT License. See `LICENSE` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Davailles Kevin - [@nours#3434](https://discord.gg) - davailles.kevin@sfr.fr
+Davailles Kevin - [@nours#3434](https://discord.gg) - davailleskevin@gmail.com
 
 Project Link: [https://github.com/KevinDavai/steamLike](https://github.com/Nours86/steamLike)
 
