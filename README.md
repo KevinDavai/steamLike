@@ -25,9 +25,6 @@
 <!-- PROJECT LOGO -->
 <br />
 <p align="center">
-  <a href="https://github.com/Nours86/steamLike">
-    <img src="https://avatars.githubusercontent.com/u/59893208?v=4" alt="Logo" width="250" height="250">
-  </a>
 
   <h3 align="center">Steam Project Symfony</h3>
 
@@ -104,13 +101,12 @@ Distributed under the MIT License. See `LICENSE` for more information.
 
 Davailles Kevin - [@nours#3434](https://discord.gg) - davailles.kevin@sfr.fr
 
-Project Link: [https://github.com/Nours86/steamLike](https://github.com/Nours86/steamLike)
+Project Link: [https://github.com/KevinDavai/steamLike](https://github.com/Nours86/steamLike)
 
 
 
 <!-- ACKNOWLEDGEMENTS -->
 ## Acknowledgements
-* [GitHub Pages](https://pages.github.com)
 * [Font Awesome](https://fontawesome.com)
 
 
